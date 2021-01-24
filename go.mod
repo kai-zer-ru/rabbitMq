@@ -1,4 +1,4 @@
-module rabbitMqGolang
+module github.com/kaizer666/rabbitMq
 
 go 1.15
 
