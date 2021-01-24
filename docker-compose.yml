@@ -1,0 +1,8 @@
+version: "3.0"
+services:
+  rabbitmqTest:
+    image: rabbitmq:3
+    container_name: rabbitmqTest
+    restart: always
+    ports:
+      - "5672:5672"
