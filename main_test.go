@@ -10,9 +10,10 @@ import (
 
 func Test_main(t *testing.T) {
 	messagesData := map[string][]string{}
-	for i := 0; i < 100; i++ {
+	//messagesResponseData := map[string][]string{} // todo check result
+	for i := 0; i < 10; i++ {
 		messagesData[fmt.Sprintf("channel%v", i)] = []string{}
-		for j := 0; j < 100; j++ {
+		for j := 0; j < 10; j++ {
 			messagesData[fmt.Sprintf("channel%v", i)] = append(messagesData[fmt.Sprintf("channel%v", i)], fmt.Sprintf("text%v", j))
 		}
 	}
@@ -45,22 +46,32 @@ func Test_main(t *testing.T) {
 			select {
 			case m := <-data["channel1"]:
 				t.Log("Channel = channel1")
+				//_, ok := messagesResponseData["channel1"]
+				//if !ok {
+				//	messagesResponseData["channel1"] = []string{}
+				//}
 				exist, _ := inArray(string(m.Body), messagesData["channel1"])
 				if !exist {
 					t.Errorf("Invalid text: " + string(m.Body))
 				}
+				//messagesResponseData["channel1"] = append(messagesResponseData["channel1"])
 				t.Logf("Message = %s", m.Body)
 			case m := <-data["channel2"]:
 				t.Log("Channel = channel2")
+				//_, ok := messagesResponseData["channel2"]
+				//if !ok {
+				//	messagesResponseData["channel2"] = []string{}
+				//}
 				exist, _ := inArray(string(m.Body), messagesData["channel2"])
 				if !exist {
 					t.Errorf("Invalid text: " + string(m.Body))
 				}
+				//messagesResponseData["channel2"] = append(messagesResponseData["channel2"])
 				t.Logf("Message = %s", m.Body)
 			}
 		}
 	}()
-	<-time.After(30*time.Second)
+	<-time.After(30 * time.Second)
 }
 
 func inArray(val interface{}, array interface{}) (exists bool, index int) {
